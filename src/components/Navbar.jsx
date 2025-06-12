@@ -7,10 +7,10 @@ function Navbar() {
       <div style={styles.container}>
         <h2 style={styles.logo}>RecipeNest</h2>
         <ul style={styles.navLinks}>
-          <li><Link to="/" style={styles.link}>Home</Link></li>
-          <li><Link to="/recipes" style={styles.link}>Recipes</Link></li>
-          <li><Link to="/add-recipe" style={styles.link}>Add Recipe</Link></li>
-          <li><Link to="/login" style={styles.link}>Login</Link></li>
+            <li><Link to="/" className="nav-link">Home</Link></li>
+            <li><Link to="/recipes" className="nav-link">Recipes</Link></li>
+            <li><Link to="/add-recipe" className="nav-link">Add Recipe</Link></li>
+            <li><Link to="/login" className="nav-link">Login</Link></li>
         </ul>
       </div>
     </nav>

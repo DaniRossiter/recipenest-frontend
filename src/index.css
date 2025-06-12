@@ -19,7 +19,7 @@ a {
   text-decoration: inherit;
 }
 a:hover {
-  color: white;
+  color: black;
 }
 
 body {
@@ -76,12 +76,12 @@ button:focus-visible {
 }
 
 .primary-button:hover {
-  background-color: black;
+  background-color: #54cc86;
 }
 
 .outline-button {
   background-color: transparent;
-  border: 2px solid #0077cc;
+  border: 2px solid #54cc86;
   color: #0077cc;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
@@ -95,5 +95,15 @@ button:focus-visible {
   color: black;
 }
 
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.2s ease-in-out;
+}
+
+.nav-link:hover {
+  color: #0077cc; 
+}
 
 
