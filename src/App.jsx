@@ -9,6 +9,7 @@ import AddRecipePage from './pages/AddRecipePage';
 import EditRecipePage from "./pages/EditRecipePage";
 import MyRecipesPage from "./pages/MyRecipesPage";
 import RecipeDetailPage from './pages/RecipeDetailPage';
+import NotFoundPage from "./pages/NotFoundPage";
 
 
 
@@ -25,6 +26,7 @@ function App() {
       <Route path="/edit/:id" element={<EditRecipePage />} />
       <Route path="/my-recipes" element={<MyRecipesPage />} />
       <Route path="/recipes/:id" element={<RecipeDetailPage />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
     </>
   );
