@@ -15,8 +15,26 @@ function RegisterPage() {
         <input type="email" placeholder="Email" style={styles.input} />
         <input type="password" placeholder="Password" style={styles.input} />
         <input type="password" placeholder="Confirm Password" style={styles.input} />
-        <button type="submit" style={styles.button}>Register</button>
+        <button
+          type="submit"
+          style={{ ...styles.button }}
+          onMouseEnter={e => {
+            e.target.style.backgroundColor = "#0077cc";
+            e.target.style.color = "white";
+          }}
+          onMouseLeave={e => {
+            e.target.style.backgroundColor = "#54cc86";
+            e.target.style.color = "black";
+          }}
+        >
+          Register
+        </button>
       </form>
+
+      <p style={styles.loginPrompt}>
+        Already have an account?{" "}
+        <a href="/login" className="register-link">Login</a>
+      </p>
     </div>
   );
 }
@@ -66,7 +84,12 @@ const styles = {
     color: "white",
     fontWeight: "600",
     cursor: "pointer",
-    transition: "background-color 0.2s"
+    transition: "background-color 0.2s, color 0.2s",
+  },
+  loginPrompt: {
+    marginTop: "1.5rem",
+    fontSize: "0.95rem",
+    color: "#555",
   }
 };
 
