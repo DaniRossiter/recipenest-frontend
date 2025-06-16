@@ -12,6 +12,12 @@ function LoginPage() {
             <input type="password" placeholder="Password" style={styles.input} />
             <button type="submit" style={styles.button}>Login</button>
         </form>
+
+        <p style={styles.registerPrompt}>
+            New here? <a href="/register" className="register-link">Register</a>
+
+        </p>
+
     </div>
   );
 }
@@ -65,7 +71,20 @@ const styles = {
         fontWeight: "600",
         cursor: "pointer",
         transition: "background-color 0.2s"
-    }
+    },
+    registerPrompt: {
+        marginTop: "1.5rem",
+        fontSize: "0.95rem",
+        color: "#555",
+    },
+
+    registerLink: {
+        color: "#0077cc",
+        textDecoration: "none",
+        fontWeight: "500",
+        transition: "color 0.2s",
+    },
+
 };
 
 

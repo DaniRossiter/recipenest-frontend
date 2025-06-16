@@ -119,6 +119,19 @@ button:focus,
   color: #0077cc;
 }
 
+/* Register Link */
+
+.register-link {
+  color: #0077cc;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease-in-out;
+}
+
+.register-link:hover {
+  color: #54cc86;
+}
+
 
 /*  Light Mode Media Query */
 
