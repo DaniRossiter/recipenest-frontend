@@ -84,7 +84,8 @@ const styles = {
     cursor: "pointer",
     border: "none",
     transform: "scale(1.02)",
-    transition: "background-color 0.2s ease, transform 0.2s ease"
+    transition: "background-color 0.2s ease, transform 0.2s ease",
+    color: "black"
   }
 };
 

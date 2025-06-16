@@ -7,6 +7,7 @@ import RegisterPage from "./pages/RegisterPage";
 import RecipeListPage from "./pages/RecipeListPage";
 import AddRecipePage from './pages/AddRecipePage';
 import EditRecipePage from "./pages/EditRecipePage";
+import MyRecipesPage from "./pages/MyRecipesPage";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       <Route path="/recipes" element={<RecipeListPage />} />
       <Route path="/add-recipe" element={<AddRecipePage />} />
       <Route path="/edit/:id" element={<EditRecipePage />} />
+      <Route path="/my-recipes" element={<MyRecipesPage />} />
     </Routes>
     </>
   );

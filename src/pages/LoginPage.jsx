@@ -10,7 +10,7 @@ function LoginPage() {
         <form style={styles.form}>
             <input type="email" placeholder="Email" style={styles.input} />
             <input type="password" placeholder="Password" style={styles.input} />
-            <button type="submit" style={styles.button}>Login</button>
+            <button type="submit" className="login-button">Login</button>
         </form>
 
         <p style={styles.registerPrompt}>
