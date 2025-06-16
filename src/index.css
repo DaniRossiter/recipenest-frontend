@@ -204,3 +204,50 @@ button:focus-visible {
   background-color: #0077cc;
   color: white;
 }
+
+/* Recipe Detail Buttons */
+
+.outline-button {
+  background-color: #0077cc;
+  border: 2pt black;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+}
+
+.outline-button:hover {
+  background-color: #0077cc;
+  color: black;
+}
+
+.primary-button {
+  background-color: #54cc86;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.2s ease-in-out;
+  border: none;
+}
+
+.primary-button:hover {
+  background-color: #54cc86;
+  color: black;
+}
+
+.delete-btn {
+  background-color: #cc4444;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.delete-btn:hover {
+  background-color: #cc4444;
+  transform: scale(1.05);
+}
