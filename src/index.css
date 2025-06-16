@@ -1,37 +1,53 @@
+/* Base / Global Styles */
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
+  font-family: "Segoe UI", Roboto, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  font-weight: 400;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
 }
+
+
+/* Layout */
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: inherit;
+  color: #333;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+}
+
+
+/* Links */
 
 a {
   font-weight: 500;
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: black;
 }
 
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-}
+
+/* Headings */
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
+
+
+/* Buttons */
 
 button {
   border-radius: 8px;
@@ -42,28 +58,22 @@ button {
   font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: all 0.25s ease-in-out;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #f5f5f5;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+button:hover {
+  background-color: #005fa3;
+  transform: scale(1.02);
+  border-color: #646cff;
 }
+
+button:focus,
+  button:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+}
+
+
+/* Primary & Outline Buttons */
 
 .primary-button {
   background-color: #0077cc;
@@ -95,6 +105,9 @@ button:focus-visible {
   color: black;
 }
 
+
+/* Navbar Links */
+
 .nav-link {
   text-decoration: none;
   color: #333;
@@ -103,7 +116,23 @@ button:focus-visible {
 }
 
 .nav-link:hover {
-  color: #0077cc; 
+  color: #0077cc;
 }
 
 
+/*  Light Mode Media Query */
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+
+  a:hover {
+    color: #f5f5f5;
+  }
+
+  button {
+    background-color: #f9f9f9;
+  }
+}

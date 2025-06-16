@@ -45,13 +45,6 @@ const styles = {
     margin: 0,
     padding: 0
   },
-  link: {
-    textDecoration: "none",
-    color: "#333",
-    fontSize: "1rem",
-    fontWeight: "500",
-    transition: "color 0.2s",
-  }
 };
 
 export default Navbar;
