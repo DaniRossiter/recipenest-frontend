@@ -3,11 +3,20 @@ import React, { useState } from "react";
 function RecipeForm({ onSubmit, initialData = {}, buttonLabel }) {
   const [title, setTitle] = useState(initialData.title || "");
   const [description, setDescription] = useState(initialData.description || "");
+  const [ingredients, setIngredients] = useState(initialData.ingredients?.join(", ") || "");
+  const [instructions, setInstructions] = useState(initialData.instructions?.join("\n") || "");
+  const [imageUrl, setImageUrl] = useState(initialData.imageUrl || "");
   const [isHovered, setIsHovered] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ title, description });
+    onSubmit({
+      title,
+      description,
+      ingredients: ingredients.split(",").map(item => item.trim()),
+      instructions: instructions.split("\n").map(step => step.trim()),
+      imageUrl
+    });
   };
 
   return (
@@ -16,14 +25,33 @@ function RecipeForm({ onSubmit, initialData = {}, buttonLabel }) {
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        placeholder="Recipe Title"
+        placeholder="Title"
         style={styles.input}
       />
       <textarea
         value={description}
         onChange={(e) => setDescription(e.target.value)}
-        placeholder="Recipe Description"
+        placeholder="Description"
         style={styles.textarea}
+      />
+      <textarea
+        value={ingredients}
+        onChange={(e) => setIngredients(e.target.value)}
+        placeholder="Ingredients (comma-separated)"
+        style={styles.textarea}
+      />
+      <textarea
+        value={instructions}
+        onChange={(e) => setInstructions(e.target.value)}
+        placeholder="Instructions"
+        style={styles.textarea}
+      />
+      <input
+        type="text"
+        value={imageUrl}
+        onChange={(e) => setImageUrl(e.target.value)}
+        placeholder="Image URL (optional)"
+        style={styles.input}
       />
       <button
         type="submit"
@@ -49,14 +77,16 @@ const styles = {
     padding: "0.75rem",
     fontSize: "1rem",
     borderRadius: "8px",
-    border: "1px solid #ccc",
+    border: "2px solid #54cc86",
+    backgroundColor: "#f0f0f0"
   },
   textarea: {
     padding: "0.75rem",
     fontSize: "1rem",
     borderRadius: "8px",
-    border: "1px solid #ccc",
-    minHeight: "120px"
+    border: "2px solid #54cc86",
+    backgroundColor: "#f0f0f0",
+    minHeight: "100px"
   },
   button: {
     padding: "0.75rem",
@@ -73,15 +103,15 @@ const styles = {
     padding: "0.75rem",
     borderRadius: "8px",
     backgroundColor: "#54cc86",
-    color: "#fff",
+    color: "black",
     fontWeight: "bold",
     fontSize: "1rem",
     cursor: "pointer",
     border: "none",
     transform: "scale(1.02)",
-    transition: "background-color 0.2s ease, transform 0.2s ease",
-    color: "black"
+    transition: "background-color 0.2s ease, transform 0.2s ease"
   }
 };
 
 export default RecipeForm;
+

@@ -1,31 +1,25 @@
 import React from "react";
 import RecipeForm from "../components/RecipeForm";
-import { useParams } from "react-router-dom";
 
 function EditRecipePage() {
-  const { id } = useParams();
-
-  const handleUpdate = (updatedRecipe) => {
-    console.log("Update this recipe in backend:", id, updatedRecipe);
-    // TODO: send PUT request
-  };
-
   const mockRecipe = {
     title: "Mock title",
-    description: "Mock description for this recipe"
+    description: "Mock description for this recipe",
+    ingredients: ["Mock ingredient 1", "Mock ingredient 2"],
+    instructions: ["Mock step 1", "Mock step 2"],
+    imageUrl: "https://via.placeholder.com/400x200"
   };
 
   return (
-    <div>
-        <h1 style={{ textAlign: "center", marginTop: "2rem", color: "#ffffff" }}>
-            Edit Recipe
-        </h1>
-
-        <RecipeForm
-            onSubmit={handleUpdate}
-            initialData={mockRecipe}
-            buttonLabel="Update Recipe"
-        />
+    <div style={{ marginTop: "4rem" }}>
+      <RecipeForm
+        initialData={mockRecipe}
+        buttonLabel="Update Recipe"
+        mode="edit"
+        onSubmit={(updatedData) => {
+          console.log("Update this recipe with:", updatedData);
+        }}
+      />
     </div>
   );
 }
