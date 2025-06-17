@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./RecipeFormResponsive.css"; // ✅ Import the mobile-only CSS
 
 function RecipeForm({ onSubmit, initialData = {}, buttonLabel }) {
   const [title, setTitle] = useState(initialData.title || "");
@@ -20,31 +21,35 @@ function RecipeForm({ onSubmit, initialData = {}, buttonLabel }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={styles.form}>
+    <form onSubmit={handleSubmit} style={styles.form} className="recipe-form">
       <input
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Title"
         style={styles.input}
+        className="form-input"
       />
       <textarea
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Description"
         style={styles.textarea}
+        className="form-textarea"
       />
       <textarea
         value={ingredients}
         onChange={(e) => setIngredients(e.target.value)}
         placeholder="Ingredients (comma-separated)"
         style={styles.textarea}
+        className="form-textarea"
       />
       <textarea
         value={instructions}
         onChange={(e) => setInstructions(e.target.value)}
         placeholder="Instructions"
         style={styles.textarea}
+        className="form-textarea"
       />
       <input
         type="text"
@@ -52,12 +57,14 @@ function RecipeForm({ onSubmit, initialData = {}, buttonLabel }) {
         onChange={(e) => setImageUrl(e.target.value)}
         placeholder="Image URL (optional)"
         style={styles.input}
+        className="form-input"
       />
       <button
         type="submit"
         style={isHovered ? styles.buttonHover : styles.button}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        className="form-button"
       >
         {buttonLabel}
       </button>
@@ -114,4 +121,5 @@ const styles = {
 };
 
 export default RecipeForm;
+
 
