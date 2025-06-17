@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
+import "./NavbarResponsive.css";
 
 function Navbar() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,25 +12,29 @@ function Navbar() {
   };
 
   return (
-    <nav style={styles.nav}>
-      <div style={styles.container}>
-        <Link to="/" style={styles.logoWrapper}>
-          <img src={logo} alt="RecipeNest logo" style={styles.logoImage} />
+    <nav style={navStyle}>
+      <div className="navbar-container">
+        <Link to="/" className="logo-wrapper">
+          <img
+            src={logo}
+            alt="RecipeNest logo"
+            className="logo-image"
+          />
         </Link>
 
-        <form onSubmit={handleSearchSubmit} style={styles.searchForm}>
+        <form onSubmit={handleSearchSubmit} className="search-form">
           <input
             type="text"
             placeholder="Search recipes..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            style={styles.searchInput}
+            className="search-input"
           />
         </form>
 
-        <div style={styles.spacer}></div>
+        <div className="spacer" />
 
-        <ul style={styles.navLinks}>
+        <ul className="nav-links">
           <li><Link to="/" className="nav-link">Home</Link></li>
           <li><Link to="/recipes" className="nav-link">Recipes</Link></li>
           <li><Link to="/add-recipe" className="nav-link">Add Recipe</Link></li>
@@ -40,58 +45,11 @@ function Navbar() {
   );
 }
 
-const styles = {
-  nav: {
-    backgroundColor: "#ffffff",
-    borderBottom: "1px solid #e0e0e0",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.03)",
-    width: "100%",
-    height: "60px",
-  },
-  container: {
-    maxWidth: "1200px",
-    margin: "0 auto",
-    padding: "0 2rem",
-    display: "flex",
-    alignItems: "center",
-    height: "100%",
-    gap: "1rem",
-  },
-  logoWrapper: {
-    height: "100%",
-    display: "flex",
-    alignItems: "center",
-    textDecoration: "none",
-  },
-  logoImage: {
-    height: "400%",
-    objectFit: "contain",
-  },
-  searchForm: {
-    flex: 1,
-    display: "flex",
-    justifyContent: "center",
-    marginLeft: "2.5rem",
-  },
-  spacer: {
-    flex: 1,
-  },
-  searchInput: {
-    padding: "0.4rem 1rem",
-    borderRadius: "20px",
-    border: "1px solid #ccc",
-    fontSize: "1rem",
-    width: "300px",
-    transition: "all 0.2s ease-in-out",
-  },
-  navLinks: {
-    listStyle: "none",
-    display: "flex",
-    gap: "2rem",
-    margin: 0,
-    padding: 0,
-  },
+const navStyle = {
+  backgroundColor: "#ffffff",
+  borderBottom: "1px solid #e0e0e0",
+  boxShadow: "0 2px 8px rgba(0,0,0,0.03)",
+  width: "100%",
 };
 
 export default Navbar;
-

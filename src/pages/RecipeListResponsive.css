@@ -1,0 +1,15 @@
+@media (max-width: 768px) {
+  .recipe-list-container {
+    padding: 2rem 1rem !important; /* reduce padding on small screens */
+  }
+
+  .recipe-grid {
+    grid-template-columns: 1fr !important; /* single column on mobile */
+    gap: 1rem !important;
+  }
+
+  .recipe-card {
+    font-size: 1rem; /* Optional: slightly smaller text */
+    padding: 1rem;    /* Optional: reduce padding inside card */
+  }
+}

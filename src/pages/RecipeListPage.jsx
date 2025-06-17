@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./RecipeListResponsive.css"; // ✅ Import the responsive CSS
 
 function RecipeListPage() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -6,11 +7,11 @@ function RecipeListPage() {
   const sampleRecipes = ["Sample Recipe 1", "Sample Recipe 2", "Sample Recipe 3"];
 
   return (
-    <div style={styles.container}>
+    <div style={styles.container} className="recipe-list-container">
       <h1 style={styles.heading}>All Recipes</h1>
       <p style={styles.subtext}>Browse delicious creations shared by our community.</p>
 
-      <div style={styles.grid}>
+      <div style={styles.grid} className="recipe-grid">
         {sampleRecipes.map((recipe, index) => (
           <div
             key={index}
@@ -18,6 +19,7 @@ function RecipeListPage() {
               ...styles.card,
               ...(hoveredIndex === index ? styles.cardHover : {})
             }}
+            className="recipe-card"
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
           >
@@ -29,13 +31,12 @@ function RecipeListPage() {
   );
 }
 
-
 const styles = {
   container: {
     padding: "4rem 2rem",
     maxWidth: "1200px",
     margin: "0 auto",
-    color: "#ffffff", // bright text on dark background
+    color: "#ffffff",
   },
   heading: {
     fontSize: "2.5rem",
@@ -65,13 +66,14 @@ const styles = {
     backdropFilter: "blur(6px)",
     transition: "transform 0.2s ease, box-shadow 0.2s ease",
     cursor: "pointer",
-    transition: "transform 0.2s ease, box-shadow 0.2s ease"
+    border: "1px solid transparent",
   },
   cardHover: {
     transform: "translateY(-5px) scale(1.03)",
-    boxShadow: "0 8px 30px rgba(84, 204, 134, 0.4)", // green glow
+    boxShadow: "0 8px 30px rgba(84, 204, 134, 0.4)",
     border: "1px solid #54cc86"
   }
 };
 
 export default RecipeListPage;
+
