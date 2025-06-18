@@ -1,10 +1,16 @@
-import React, { useState } from "react";
-import "./RecipeListResponsive.css"; // ✅ Import the responsive CSS
+import React, { useState, useEffect } from "react";
+import "./RecipeListResponsive.css";
 
 function RecipeListPage() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [recipes, setRecipes] = useState([]);
 
-  const sampleRecipes = ["Sample Recipe 1", "Sample Recipe 2", "Sample Recipe 3"];
+  useEffect(() => {
+    fetch("http://localhost:5000/api/recipes") // 🔁 Update if your backend URL is different
+      .then((res) => res.json())
+      .then((data) => setRecipes(data))
+      .catch((err) => console.error("Failed to fetch recipes:", err));
+  }, []);
 
   return (
     <div style={styles.container} className="recipe-list-container">
@@ -12,9 +18,9 @@ function RecipeListPage() {
       <p style={styles.subtext}>Browse delicious creations shared by our community.</p>
 
       <div style={styles.grid} className="recipe-grid">
-        {sampleRecipes.map((recipe, index) => (
+        {recipes.map((recipe, index) => (
           <div
-            key={index}
+            key={recipe.id || index}
             style={{
               ...styles.card,
               ...(hoveredIndex === index ? styles.cardHover : {})
@@ -23,7 +29,7 @@ function RecipeListPage() {
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
           >
-            {recipe}
+            {recipe.title}
           </div>
         ))}
       </div>
@@ -76,4 +82,5 @@ const styles = {
 };
 
 export default RecipeListPage;
+
 
