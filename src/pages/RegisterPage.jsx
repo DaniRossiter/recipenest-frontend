@@ -1,6 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function RegisterPage() {
+  const navigate = useNavigate();
+  const [username, setUsername] = useState(""); // Added username state
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState(null);
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setError(null);
+
+    // Check all fields present
+    if (!username || !email || !password) {
+      return setError("All fields are required.");
+    }
+
+    if (password !== confirmPassword) {
+      return setError("Passwords do not match.");
+    }
+
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ username, email, password })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to register.");
+      }
+
+      localStorage.setItem("authToken", data.token); // This will work once backend returns token
+      navigate("/recipes");
+    } catch (err) {
+      setError(err.message);
+    }
+
+    console.log("Sending:", { username, email, password }); // ✅ Keep your debug log
+  };
+
   return (
     <div style={styles.container}>
       <img
@@ -11,10 +56,38 @@ function RegisterPage() {
       <h1 style={styles.heading}>Create Your Account</h1>
       <p style={styles.subtext}>Join RecipeNest and start saving your favorites!</p>
 
-      <form style={styles.form}>
-        <input type="email" placeholder="Email" style={styles.input} />
-        <input type="password" placeholder="Password" style={styles.input} />
-        <input type="password" placeholder="Confirm Password" style={styles.input} />
+      <form style={styles.form} onSubmit={handleRegister}>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          style={styles.input}
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          style={styles.input}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          style={styles.input}
+        />
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          style={styles.input}
+        />
+
+        {error && <p style={{ color: "salmon", marginTop: "-0.5rem" }}>{error}</p>}
+
         <button
           type="submit"
           style={{ ...styles.button }}
