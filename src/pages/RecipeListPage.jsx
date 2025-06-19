@@ -4,13 +4,42 @@ import "./RecipeListResponsive.css";
 function RecipeListPage() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/recipes") // 🔁 Update if your backend URL is different
-      .then((res) => res.json())
-      .then((data) => setRecipes(data))
-      .catch((err) => console.error("Failed to fetch recipes:", err));
+  const fetchRecipes = async () => {
+    setLoading(true);      // Start loading
+    setError(null);        // Clear previous errors
+
+    try {
+      const res = await fetch("http://localhost:5000/api/recipes");
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch recipes");
+      }
+
+      const data = await res.json();
+      setRecipes(data);
+    } catch (err) {
+      console.error("Failed to fetch recipes:", err);
+      setError(err.message);
+    } finally {
+      setLoading(false);   // Done loading (whether success or error)
+    }
+  };
+
+  fetchRecipes();
   }, []);
+
+  if (loading) {
+    return <p style={{ textAlign: "center", color: "#ccc" }}>Loading recipes...</p>;
+  }
+
+  if (error) {
+    return <p style={{ textAlign: "center", color: "salmon" }}>Error: {error}</p>;
+  }
 
   return (
     <div style={styles.container} className="recipe-list-container">
