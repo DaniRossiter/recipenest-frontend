@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./RecipeListResponsive.css";
+import RecipeCard from "../components/RecipeCard";
 
 function RecipeListPage() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -7,30 +8,29 @@ function RecipeListPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-
   useEffect(() => {
-  const fetchRecipes = async () => {
-    setLoading(true);      // Start loading
-    setError(null);        // Clear previous errors
+    const fetchRecipes = async () => {
+      setLoading(true);
+      setError(null);
 
-    try {
-      const res = await fetch("http://localhost:5000/api/recipes");
+      try {
+        const res = await fetch("http://localhost:5000/api/recipes");
 
-      if (!res.ok) {
-        throw new Error("Failed to fetch recipes");
+        if (!res.ok) {
+          throw new Error("Failed to fetch recipes");
+        }
+
+        const data = await res.json();
+        setRecipes(data);
+      } catch (err) {
+        console.error("Failed to fetch recipes:", err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
       }
+    };
 
-      const data = await res.json();
-      setRecipes(data);
-    } catch (err) {
-      console.error("Failed to fetch recipes:", err);
-      setError(err.message);
-    } finally {
-      setLoading(false);   // Done loading (whether success or error)
-    }
-  };
-
-  fetchRecipes();
+    fetchRecipes();
   }, []);
 
   if (loading) {
@@ -48,18 +48,13 @@ function RecipeListPage() {
 
       <div style={styles.grid} className="recipe-grid">
         {recipes.map((recipe, index) => (
-          <div
+          <RecipeCard
             key={recipe.id || index}
-            style={{
-              ...styles.card,
-              ...(hoveredIndex === index ? styles.cardHover : {})
-            }}
-            className="recipe-card"
+            recipe={recipe}
+            isHovered={hoveredIndex === index}
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
-          >
-            {recipe.title}
-          </div>
+          />
         ))}
       </div>
     </div>
@@ -89,27 +84,10 @@ const styles = {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
     gap: "2rem",
-  },
-  card: {
-    backgroundColor: "rgba(255, 255, 255, 0.08)",
-    borderRadius: "12px",
-    padding: "1.5rem",
-    boxShadow: "0 4px 30px rgba(0,0,0,0.3)",
-    textAlign: "center",
-    fontWeight: "500",
-    color: "#fff",
-    backdropFilter: "blur(6px)",
-    transition: "transform 0.2s ease, box-shadow 0.2s ease",
-    cursor: "pointer",
-    border: "1px solid transparent",
-  },
-  cardHover: {
-    transform: "translateY(-5px) scale(1.03)",
-    boxShadow: "0 8px 30px rgba(84, 204, 134, 0.4)",
-    border: "1px solid #54cc86"
   }
 };
 
 export default RecipeListPage;
+
 
 
