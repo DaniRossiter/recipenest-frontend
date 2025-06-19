@@ -8,7 +8,7 @@ function MyRecipesPage() {
       title: "Spaghetti Bolognese",
       description: "A classic Italian dish with tomato and beef sauce.",
     }
-    // Leave this empty to test conditional rendering
+    // Leave empty to test conditional rendering
     // []
   ];
 

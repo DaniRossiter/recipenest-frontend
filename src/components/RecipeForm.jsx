@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./RecipeFormResponsive.css"; // Keeps responsive tweaks if needed
+import "./RecipeFormResponsive.css"; 
 
 function RecipeForm({ onSubmit, initialData = {}, buttonLabel }) {
   const [title, setTitle] = useState(initialData.title || "");

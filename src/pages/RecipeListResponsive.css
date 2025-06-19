@@ -9,7 +9,7 @@
   }
 
   .recipe-card {
-    font-size: 1rem; /* Optional: slightly smaller text */
-    padding: 1rem;    /* Optional: reduce padding inside card */
+    font-size: 1rem; /* slightly smaller text */
+    padding: 1rem;    /* reduce padding inside card */
   }
 }
