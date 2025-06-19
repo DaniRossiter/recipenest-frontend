@@ -1,32 +1,46 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
 function RecipeDetailPage() {
+  const { id } = useParams();
   const navigate = useNavigate();
 
-  // Placeholder/mock data
-  const recipe = {
-    title: "Spaghetti Bolognese",
-    description: "A hearty tomato and meat sauce",
-    ingredients: ["Spaghetti", "Beef mince", "Onion", "Garlic", "Tomato paste"],
-    instructions: [
-      "Boil pasta according to package instructions.",
-      "Sauté onion and garlic until fragrant.",
-      "Add beef and brown.",
-      "Stir in tomato paste and simmer.",
-      "Combine with drained pasta and serve."
-    ],
-    imageUrl: "https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    isOwner: true
-  };
+  const [recipe, setRecipe] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchRecipe = async () => {
+      try {
+        const res = await fetch(`http://localhost:5000/api/recipes/${id}`);
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || "Failed to fetch recipe");
+        }
+
+        setRecipe(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRecipe();
+  }, [id]);
+
+  if (loading) return <p style={{ textAlign: "center" }}>Loading...</p>;
+  if (error) return <p style={{ textAlign: "center", color: "salmon" }}>Error: {error}</p>;
+  if (!recipe) return null;
 
   return (
     <div style={styles.container}>
       <h1 style={styles.title}>{recipe.title}</h1>
 
-      {recipe.imageUrl && (
+      {recipe.image_url && (
         <img
-          src={recipe.imageUrl}
+          src={recipe.image_url}
           alt={recipe.title}
           style={styles.image}
         />
@@ -36,23 +50,33 @@ function RecipeDetailPage() {
 
       <h3 style={styles.sectionTitle}>Ingredients</h3>
       <ul style={styles.list}>
-        {recipe.ingredients.map((item, index) => (
-          <li key={index}>{item}</li>
-        ))}
+        {Array.isArray(recipe.ingredients) ? (
+          recipe.ingredients.map((item, index) => <li key={index}>{item}</li>)
+        ) : (
+          <li>No ingredients listed.</li>
+        )}
       </ul>
+
 
       <h3 style={styles.sectionTitle}>Instructions</h3>
       <ol style={styles.list}>
-        {recipe.instructions.map((step, index) => (
-          <li key={index}>{step}</li>
+        {(Array.isArray(recipe.instructions)
+          ? recipe.instructions
+          : typeof recipe.instructions === "string"
+            ? recipe.instructions.split(/\d+\.\s*/) // splits on "1. ", "2. ", etc.
+            .filter(step => step.trim() !== "")
+            : []
+        ).map((step, index) => (
+          <li key={index}>{step.trim()}</li>
         ))}
-      </ol>
+        </ol>
+
 
       <div style={styles.buttonContainer}>
         <button className="outline-button" onClick={() => navigate("/recipes")}>Back</button>
         {recipe.isOwner && (
           <>
-            <button className="primary-button" onClick={() => navigate("/edit/1")}>Edit</button>
+            <button className="primary-button" onClick={() => navigate(`/edit/${id}`)}>Edit</button>
             <button className="delete-btn">Delete</button>
           </>
         )}
@@ -110,3 +134,5 @@ const styles = {
 };
 
 export default RecipeDetailPage;
+
+

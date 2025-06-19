@@ -1,10 +1,15 @@
 import React from "react";
 import "../pages/RecipeListResponsive.css"; // Keep styles consistent
+import { Link } from "react-router-dom";
 
 function RecipeCard({ recipe, isHovered, onMouseEnter, onMouseLeave }) {
   const { title, image_url } = recipe;
 
   return (
+  <Link
+    to={`/recipes/${recipe.id}`}
+    style={{ textDecoration: "none" }}
+  >
     <div
       className="recipe-card"
       style={{
@@ -15,15 +20,13 @@ function RecipeCard({ recipe, isHovered, onMouseEnter, onMouseLeave }) {
       onMouseLeave={onMouseLeave}
     >
       {image_url && (
-        <img
-          src={image_url}
-          alt={title}
-          style={styles.image}
-        />
+        <img src={image_url} alt={title} style={styles.image} />
       )}
       <h3 style={styles.title}>{title}</h3>
     </div>
-  );
+  </Link>
+);
+
 }
 
 const styles = {
