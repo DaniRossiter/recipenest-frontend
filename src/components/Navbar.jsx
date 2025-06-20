@@ -1,25 +1,35 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import "./NavbarResponsive.css";
 
 function Navbar() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [username, setUsername] = useState(localStorage.getItem("username"));
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    setUsername(storedUsername);
+  }, []);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     console.log("Search for:", searchTerm);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("username");
+    setUsername(null);
+    navigate("/");
+  };
+
   return (
     <nav style={navStyle}>
       <div className="navbar-container">
         <Link to="/" className="logo-wrapper">
-          <img
-            src={logo}
-            alt="RecipeNest logo"
-            className="logo-image"
-          />
+          <img src={logo} alt="RecipeNest logo" className="logo-image" />
         </Link>
 
         <form onSubmit={handleSearchSubmit} className="search-form">
@@ -38,7 +48,20 @@ function Navbar() {
           <li><Link to="/" className="nav-link">Home</Link></li>
           <li><Link to="/recipes" className="nav-link">Recipes</Link></li>
           <li><Link to="/add-recipe" className="nav-link">Add Recipe</Link></li>
-          <li><Link to="/login" className="nav-link">Login</Link></li>
+
+          {username ? (
+            <li>
+              <span
+                className="nav-link"
+                onClick={handleLogout}
+                style={{ cursor: "pointer" }}
+              >
+                Logout
+              </span>
+            </li>
+          ) : (
+            <li><Link to="/login" className="nav-link">Login</Link></li>
+          )}
         </ul>
       </div>
     </nav>

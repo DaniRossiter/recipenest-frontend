@@ -29,6 +29,8 @@ function LoginPage() {
 
     // Save token to localStorage
     localStorage.setItem("authToken", data.token);
+    localStorage.setItem("username", data.user.username);
+
     setTimeout(() => {
         navigate("/my-recipes");
     }, 100);

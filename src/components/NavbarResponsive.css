@@ -101,3 +101,94 @@
     padding: 0;
   }
 }
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.greeting {
+  color: #333;
+  font-weight: 500;
+}
+
+.logout-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #007bff;
+  font-size: 1rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.logout-button:hover {
+  text-decoration: underline;
+}
+
+/* Optional: improve spacing on mobile */
+@media (max-width: 768px) {
+  .user-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+  }
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-user {
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.nav-logout {
+  background: none;
+  border: none;
+  color: #007bff;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  transition: color 0.2s;
+}
+
+.nav-logout:hover {
+  color: #0056b3;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  font-family: inherit;
+  transition: color 0.2s;
+}
+
+.logout-btn:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.username-text {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: #333;
+  font-weight: 500;
+  cursor: default;
+}
+
+.username-text.no-hover:hover {
+  color: #333;
+  text-decoration: none;
+  cursor: default;
+}
+

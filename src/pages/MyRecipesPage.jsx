@@ -5,6 +5,7 @@ function MyRecipesPage() {
   const [myRecipes, setMyRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const username = localStorage.getItem("username");
 
   useEffect(() => {
     const fetchMyRecipes = async () => {
@@ -43,8 +44,10 @@ function MyRecipesPage() {
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.heading}>My Recipes</h1>
-      <p style={styles.subtext}>These are all the recipes you’ve added.</p>
+      <h1 style={styles.heading}>
+        {username ? `Welcome back, ${username}!` : "My Recipes"}
+      </h1>
+      <p style={styles.subtext}>Here are the recipes you've added:</p>
 
       <input
         type="text"
@@ -77,7 +80,8 @@ function MyRecipesPage() {
   );
 }
 
-// Keep styles the same...
+
+
 const styles = {
   container: {
     padding: "4rem 2rem",
