@@ -15,7 +15,7 @@ function Navbar() {
   };
 
   const handleLogout = () => {
-    logout(); // This now uses your context logout function
+    logout();
     navigate("/");
   };
 
@@ -41,6 +41,7 @@ function Navbar() {
         <ul className="nav-links">
           <li><Link to="/" className="nav-link">Home</Link></li>
           <li><Link to="/recipes" className="nav-link">Recipes</Link></li>
+          <li><Link to="/my-recipes" className="nav-link">My Recipes</Link></li>
           <li><Link to="/add-recipe" className="nav-link">Add Recipe</Link></li>
 
           {isAuthenticated ? (
@@ -72,3 +73,4 @@ const navStyle = {
 };
 
 export default Navbar;
+

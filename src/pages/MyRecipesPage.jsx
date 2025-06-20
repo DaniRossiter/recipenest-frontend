@@ -1,28 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function MyRecipesPage() {
   const [myRecipes, setMyRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const username = localStorage.getItem("username");
+  const navigate = useNavigate(); // initialize navigate
 
   useEffect(() => {
     const fetchMyRecipes = async () => {
       const token = localStorage.getItem("authToken");
 
       if (!token) {
-        setError("You must be logged in to view your recipes.");
-        setLoading(false);
+        navigate("/login"); // redirect if not logged in
         return;
       }
 
       try {
         const res = await fetch("http://localhost:5000/api/recipes/mine", {
           headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json"
-          }
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         });
 
         const data = await res.json();
@@ -40,7 +40,7 @@ function MyRecipesPage() {
     };
 
     fetchMyRecipes();
-  }, []);
+  }, [navigate]);
 
   return (
     <div style={styles.container}>
@@ -79,6 +79,7 @@ function MyRecipesPage() {
     </div>
   );
 }
+
 
 
 
