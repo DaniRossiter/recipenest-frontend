@@ -15,10 +15,13 @@ function AddRecipePage() {
   }, [isAuthenticated, navigate]);
 
   const handleAdd = async (newRecipe) => {
+    console.log("handleAdd called with:", newRecipe);
     try {
       const token = localStorage.getItem("authToken");
 
-      const response = await fetch("/api/recipes", {
+      const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+
+      const response = await fetch(`${API_BASE}/api/recipes`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

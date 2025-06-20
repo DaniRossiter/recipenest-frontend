@@ -18,6 +18,7 @@ function RecipeForm({ onSubmit, initialData = {}, buttonLabel }) {
       instructions: instructions.split("\n").map(step => step.trim()),
       imageUrl,
     });
+    console.log("Form submitted in RecipeForm");
   };
 
   return (
