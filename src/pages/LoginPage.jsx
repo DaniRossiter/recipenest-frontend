@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext); // context
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -15,9 +17,9 @@ function LoginPage() {
       const res = await fetch("http://localhost:5000/api/auth/login", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();
@@ -27,14 +29,10 @@ function LoginPage() {
         return;
       }
 
-    // Save token to localStorage
-    localStorage.setItem("authToken", data.token);
-    localStorage.setItem("username", data.user.username);
+      // login() from context
+      login(data.token, data.user.username);
 
-    setTimeout(() => {
-        navigate("/my-recipes");
-    }, 100);
-
+      navigate("/my-recipes"); // No need for timeout anymore
     } catch (err) {
       setError("Something went wrong. Please try again.");
     }
@@ -93,17 +91,17 @@ const styles = {
   heading: {
     fontSize: "2.2rem",
     marginBottom: "1rem",
-    color: "#222"
+    color: "#222",
   },
   subtext: {
     fontSize: "1rem",
-    color: "#555"
+    color: "#555",
   },
   form: {
     marginTop: "2rem",
     display: "flex",
     flexDirection: "column",
-    gap: "1rem"
+    gap: "1rem",
   },
   input: {
     padding: "0.75rem 1rem",
@@ -119,7 +117,7 @@ const styles = {
     marginTop: "1.5rem",
     fontSize: "0.95rem",
     color: "#555",
-  }
+  },
 };
 
 export default LoginPage;

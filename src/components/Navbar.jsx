@@ -1,17 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { AuthContext } from "../context/AuthContext";
 import "./NavbarResponsive.css";
 
 function Navbar() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [username, setUsername] = useState(localStorage.getItem("username"));
+  const { isAuthenticated, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const storedUsername = localStorage.getItem("username");
-    setUsername(storedUsername);
-  }, []);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -19,9 +15,7 @@ function Navbar() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("username");
-    setUsername(null);
+    logout(); // This now uses your context logout function
     navigate("/");
   };
 
@@ -49,7 +43,7 @@ function Navbar() {
           <li><Link to="/recipes" className="nav-link">Recipes</Link></li>
           <li><Link to="/add-recipe" className="nav-link">Add Recipe</Link></li>
 
-          {username ? (
+          {isAuthenticated ? (
             <li>
               <span
                 className="nav-link"
@@ -60,7 +54,9 @@ function Navbar() {
               </span>
             </li>
           ) : (
-            <li><Link to="/login" className="nav-link">Login</Link></li>
+            <li>
+              <Link to="/login" className="nav-link">Login</Link>
+            </li>
           )}
         </ul>
       </div>
