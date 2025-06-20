@@ -23,13 +23,16 @@ function LoginPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.message || "Login failed");
+        setError(data.error || "Login failed");
         return;
       }
 
-      // Save token to localStorage
-      localStorage.setItem("authToken", data.token);
-      navigate("/my-recipes");
+    // Save token to localStorage
+    localStorage.setItem("authToken", data.token);
+    setTimeout(() => {
+        navigate("/my-recipes");
+    }, 100);
+
     } catch (err) {
       setError("Something went wrong. Please try again.");
     }

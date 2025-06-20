@@ -1,16 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function MyRecipesPage() {
-  const myRecipes = [
-    {
-      id: 1,
-      title: "Spaghetti Bolognese",
-      description: "A classic Italian dish with tomato and beef sauce.",
-    }
-    // Leave empty to test conditional rendering
-    // []
-  ];
+  const [myRecipes, setMyRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchMyRecipes = async () => {
+      const token = localStorage.getItem("authToken");
+
+      if (!token) {
+        setError("You must be logged in to view your recipes.");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:5000/api/recipes/mine", {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          setError(data.error || "Failed to fetch recipes.");
+        } else {
+          setMyRecipes(data);
+        }
+      } catch (err) {
+        setError("Something went wrong while fetching your recipes.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMyRecipes();
+  }, []);
 
   return (
     <div style={styles.container}>
@@ -23,7 +52,11 @@ function MyRecipesPage() {
         style={styles.searchBar}
       />
 
-      {myRecipes.length === 0 ? (
+      {error && <p style={{ color: "salmon" }}>{error}</p>}
+
+      {loading ? (
+        <p style={styles.noRecipes}>Loading...</p>
+      ) : myRecipes.length === 0 ? (
         <p style={styles.noRecipes}>You haven't added any recipes yet.</p>
       ) : (
         <div style={styles.grid}>
@@ -33,9 +66,8 @@ function MyRecipesPage() {
               <p style={styles.cardDesc}>{recipe.description}</p>
               <div style={styles.buttonRow}>
                 <Link to={`/recipes/${recipe.id}`} className="recipe-btn view-btn">View</Link>
-<Link to={`/edit/${recipe.id}`} className="recipe-btn edit-btn">Edit</Link>
-<button className="recipe-btn delete-btn">Delete</button>
-
+                <Link to={`/edit/${recipe.id}`} className="recipe-btn edit-btn">Edit</Link>
+                <button className="recipe-btn delete-btn">Delete</button>
               </div>
             </div>
           ))}
@@ -45,6 +77,7 @@ function MyRecipesPage() {
   );
 }
 
+// Keep styles the same...
 const styles = {
   container: {
     padding: "4rem 2rem",
@@ -81,7 +114,7 @@ const styles = {
   },
   card: {
     backgroundColor: "#333",
-    borderLeft: "4px solid #54cc86", // GREEN ACCENT STRIPE
+    borderLeft: "4px solid #54cc86",
     borderRadius: "12px",
     padding: "1.5rem",
     boxShadow: "0 4px 20px rgba(0,0,0,0.2)"
@@ -100,29 +133,8 @@ const styles = {
     display: "flex",
     gap: "1rem"
   },
-  viewBtn: {
-    backgroundColor: "#0077cc",
-    color: "#fff",
-    padding: "0.5rem 1rem",
-    borderRadius: "6px",
-    textDecoration: "none"
-  },
-  editBtn: {
-    backgroundColor: "#54cc86", // GREEN
-    color: "#fff",
-    padding: "0.5rem 1rem",
-    borderRadius: "6px",
-    textDecoration: "none"
-  },
-  deleteBtn: {
-    backgroundColor: "#cc4444",
-    color: "#fff",
-    padding: "0.5rem 1rem",
-    borderRadius: "6px",
-    border: "none",
-    cursor: "pointer"
-  }
 };
 
 export default MyRecipesPage;
+
 
