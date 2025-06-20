@@ -1,16 +1,28 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import RecipeForm from "../components/RecipeForm";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 function AddRecipePage() {
   const navigate = useNavigate();
+  const { isAuthenticated } = useContext(AuthContext);
+
+  // Redirect if not logged in
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleAdd = async (newRecipe) => {
     try {
+      const token = localStorage.getItem("authToken");
+
       const response = await fetch("/api/recipes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(newRecipe),
       });
