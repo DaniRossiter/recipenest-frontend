@@ -19,6 +19,7 @@ function RecipeDetailPage() {
           throw new Error(data.error || "Failed to fetch recipe");
         }
 
+        console.log("Fetched recipe:", data);
         setRecipe(data);
       } catch (err) {
         setError(err.message);
@@ -57,20 +58,16 @@ function RecipeDetailPage() {
         )}
       </ul>
 
-
-      <h3 style={styles.sectionTitle}>Instructions</h3>
-      <ol style={styles.list}>
-        {(Array.isArray(recipe.instructions)
-          ? recipe.instructions
-          : typeof recipe.instructions === "string"
-            ? recipe.instructions.split(/\d+\.\s*/) // splits on "1. ", "2. ", etc.
-            .filter(step => step.trim() !== "")
-            : []
-        ).map((step, index) => (
-          <li key={index}>{step.trim()}</li>
-        ))}
+     <h3 style={styles.sectionTitle}>Instructions</h3>
+        <ol style={styles.list}>
+          {Array.isArray(recipe.instructions)
+            ? recipe.instructions.map((step, index) => (
+              <li key={index}>
+                {step.replace(/^\d+\.\s*/, "").trim()}
+              </li>
+              ))
+            : <li>No instructions available.</li>}
         </ol>
-
 
       <div style={styles.buttonContainer}>
         <button className="outline-button" onClick={() => navigate("/recipes")}>Back</button>
