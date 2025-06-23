@@ -47,27 +47,29 @@ function RecipeDetailPage() {
         />
       )}
 
-      <p style={styles.description}>{recipe.description}</p>
+      <div style={styles.contentWrapper}>
+        <p style={styles.description}>{recipe.description}</p>
 
-      <h3 style={styles.sectionTitle}>Ingredients</h3>
-      <ul style={styles.list}>
-        {Array.isArray(recipe.ingredients) ? (
-          recipe.ingredients.map((item, index) => <li key={index}>{item}</li>)
-        ) : (
-          <li>No ingredients listed.</li>
-        )}
-      </ul>
+        <h3 style={styles.sectionTitle}>Ingredients</h3>
+        <ul style={styles.list}>
+          {Array.isArray(recipe.ingredients) ? (
+            recipe.ingredients.map((item, index) => <li key={index}>{item}</li>)
+          ) : (
+            <li>No ingredients listed.</li>
+          )}
+        </ul>
 
-      <h3 style={styles.sectionTitle}>Instructions</h3>
-      <ol style={styles.list}>
-        {Array.isArray(recipe.instructions)
-          ? recipe.instructions.map((step, index) => (
-            <li key={index}>
-              {step.replace(/^\d+\.\s*/, "").trim()}
-            </li>
-          ))
-          : <li>No instructions available.</li>}
-      </ol>
+        <h3 style={styles.sectionTitle}>Instructions</h3>
+        <ol style={styles.list}>
+          {Array.isArray(recipe.instructions)
+            ? recipe.instructions.map((step, index) => (
+              <li key={index}>
+                {step.replace(/^\d+\.\s*/, "").trim()}
+              </li>
+            ))
+            : <li>No instructions available.</li>}
+        </ol>
+      </div>
 
       <div style={styles.buttonContainer}>
         <button className="outline-button" onClick={() => navigate("/recipes")}>Back</button>
@@ -109,10 +111,16 @@ const styles = {
     margin: "1rem auto",
     display: "block"
   },
+  contentWrapper: {
+    maxWidth: "500px",
+    margin: "0 auto",
+    textAlign: "left"
+  },
   description: {
     fontStyle: "italic",
+    fontWeight: "bold",
     marginBottom: "1.5rem",
-    textAlign: "center",
+    textAlign: "center"
   },
   sectionTitle: {
     fontSize: "1.25rem",
@@ -132,3 +140,4 @@ const styles = {
 };
 
 export default RecipeDetailPage;
+
