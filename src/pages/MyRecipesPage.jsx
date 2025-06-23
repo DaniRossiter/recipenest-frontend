@@ -69,7 +69,7 @@ function MyRecipesPage() {
               <p style={styles.cardDesc}>{recipe.description}</p>
               <div style={styles.buttonRow}>
                 <Link to={`/recipes/${recipe.id}`} className="recipe-btn view-btn">View</Link>
-                <Link to={`/edit/${recipe.id}`} className="recipe-btn edit-btn">Edit</Link>
+                <Link to={`/recipes/${recipe.id}/edit`} className="recipe-btn edit-btn">Edit</Link>
                 <button className="recipe-btn delete-btn">Delete</button>
               </div>
             </div>

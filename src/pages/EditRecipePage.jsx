@@ -1,27 +1,77 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import RecipeForm from "../components/RecipeForm";
+import { AuthContext } from "../context/AuthContext";
 
 function EditRecipePage() {
-  const mockRecipe = {
-    title: "Mock title",
-    description: "Mock description for this recipe",
-    ingredients: ["Mock ingredient 1", "Mock ingredient 2"],
-    instructions: ["Mock step 1", "Mock step 2"],
-    imageUrl: "https://via.placeholder.com/400x200"
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { authToken } = useContext(AuthContext);
+  const [initialData, setInitialData] = useState(null);
+
+  useEffect(() => {
+    const fetchRecipe = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/recipes/${id}`);
+        if (!response.ok) throw new Error("Failed to fetch recipe");
+
+        const data = await response.json();
+        setInitialData({
+          title: data.title,
+          description: data.description,
+          ingredients: data.ingredients,
+          instructions: data.instructions,
+          imageUrl: data.image_url,
+        });
+      } catch (err) {
+        console.error(err);
+        navigate("/not-found");
+      }
+    };
+
+    fetchRecipe();
+  }, [id, navigate]);
+
+  const handleUpdate = async (updatedRecipe) => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/recipes/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: JSON.stringify(updatedRecipe),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to update recipe");
+      }
+
+      const data = await response.json();
+      console.log("Recipe updated:", data);
+      navigate(`/recipes/${id}`);
+    } catch (err) {
+      console.error("Error updating recipe:", err);
+      alert(err.message);
+    }
   };
 
   return (
     <div style={{ marginTop: "4rem" }}>
-      <RecipeForm
-        initialData={mockRecipe}
-        buttonLabel="Update Recipe"
-        mode="edit"
-        onSubmit={(updatedData) => {
-          console.log("Update this recipe with:", updatedData);
-        }}
-      />
+      {initialData ? (
+        <RecipeForm
+          initialData={initialData}
+          buttonLabel="Update Recipe"
+          mode="edit"
+          onSubmit={handleUpdate}
+        />
+      ) : (
+        <p style={{ textAlign: "center", color: "white" }}>Loading recipe...</p>
+      )}
     </div>
   );
 }
 
 export default EditRecipePage;
+
