@@ -1,15 +1,37 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 function LandingPage() {
+  const { isAuthenticated } = useContext(AuthContext);
+  const username = localStorage.getItem("username");
+
   return (
     <div style={styles.container}>
-      <h1 style={styles.title}>Welcome to RecipeNest!</h1>
+      <h1 style={styles.title}>
+        {isAuthenticated && username
+          ? `Welcome back, ${username}!`
+          : "Welcome to RecipeNest!"}
+      </h1>
+
       <p style={styles.subtitle}>
-        From comfort food to creative flair. Store, share, and explore your favorite recipes.
+        {isAuthenticated
+          ? "Start cooking by exploring your recipes or adding something delicious!"
+          : "From comfort food to creative flair. Store, share, and explore your favorite recipes."}
       </p>
+
       <div style={styles.buttons}>
-        <a href="/recipes" className="primary-button">Browse Recipes</a>
-        <a href="/login" className="outline-button">Login</a>
+        {isAuthenticated ? (
+          <>
+            <Link to="/my-recipes" className="primary-button">My Recipes</Link>
+            <Link to="/add-recipe" className="outline-button">Add Recipe</Link>
+          </>
+        ) : (
+          <>
+            <Link to="/recipes" className="primary-button">Browse Recipes</Link>
+            <Link to="/login" className="outline-button">Login</Link>
+          </>
+        )}
       </div>
     </div>
   );
@@ -25,18 +47,19 @@ const styles = {
   title: {
     fontSize: "3rem",
     marginBottom: "1rem",
-    color: "white"
+    color: "white",
   },
   subtitle: {
     fontSize: "1.25rem",
     marginBottom: "2rem",
-    color: "white"
+    color: "white",
   },
   buttons: {
     display: "flex",
     justifyContent: "center",
-    gap: "1.5rem"
-  }
+    gap: "1.5rem",
+    flexWrap: "wrap",
+  },
 };
 
 export default LandingPage;
