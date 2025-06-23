@@ -22,6 +22,7 @@ function EditRecipePage() {
           ingredients: data.ingredients,
           instructions: data.instructions,
           imageUrl: data.image_url,
+          servings: data.servings,
         });
       } catch (err) {
         console.error(err);
