@@ -10,7 +10,11 @@ function Navbar({ searchTerm, setSearchTerm }) {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    console.log("Search for:", searchTerm);
+    if (searchTerm.trim()) {
+      navigate(`/recipes?q=${encodeURIComponent(searchTerm.trim())}`);
+    } else {
+      navigate("/recipes");
+    }
   };
 
   const handleLogout = () => {

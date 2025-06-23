@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import "./RecipeListResponsive.css";
 import RecipeCard from "../components/RecipeCard";
 
-function RecipeListPage({ searchTerm }) {
+function RecipeListPage() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const queryFromURL = queryParams.get("q") || "";
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -34,7 +39,7 @@ function RecipeListPage({ searchTerm }) {
   }, []);
 
   const filteredRecipes = recipes.filter((recipe) =>
-    recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
+    recipe.title.toLowerCase().includes(queryFromURL.toLowerCase())
   );
 
   if (loading) {
@@ -76,20 +81,20 @@ const styles = {
     fontSize: "2.5rem",
     marginBottom: "1rem",
     color: "#ffffff",
-    textAlign: "center"
+    textAlign: "center",
   },
   subtext: {
     fontSize: "1.1rem",
     marginBottom: "2rem",
     color: "#dddddd",
-    textAlign: "center"
+    textAlign: "center",
   },
   grid: {
-  display: "flex",
-  flexWrap: "wrap",
-  justifyContent: "center",
-  gap: "2rem",
-}
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    gap: "2rem",
+  },
 };
 
 export default RecipeListPage;
