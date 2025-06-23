@@ -6,14 +6,14 @@ function MyRecipesPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const username = localStorage.getItem("username");
-  const navigate = useNavigate(); // initialize navigate
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMyRecipes = async () => {
       const token = localStorage.getItem("authToken");
 
       if (!token) {
-        navigate("/login"); // redirect if not logged in
+        navigate("/login");
         return;
       }
 
@@ -41,6 +41,34 @@ function MyRecipesPage() {
 
     fetchMyRecipes();
   }, [navigate]);
+
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this recipe?");
+    if (!confirmDelete) return;
+
+    const token = localStorage.getItem("authToken");
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/recipes/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to delete recipe.");
+      }
+
+      setMyRecipes((prev) => prev.filter((recipe) => recipe.id !== id));
+      alert("Recipe deleted successfully!");
+    } catch (err) {
+      alert(err.message);
+    }
+  };
 
   return (
     <div style={styles.container}>
@@ -70,7 +98,12 @@ function MyRecipesPage() {
               <div style={styles.buttonRow}>
                 <Link to={`/recipes/${recipe.id}`} className="recipe-btn view-btn">View</Link>
                 <Link to={`/recipes/${recipe.id}/edit`} className="recipe-btn edit-btn">Edit</Link>
-                <button className="recipe-btn delete-btn">Delete</button>
+                <button
+                  className="recipe-btn delete-btn"
+                  onClick={() => handleDelete(recipe.id)}
+                >
+                  Delete
+                </button>
               </div>
             </div>
           ))}
@@ -79,9 +112,6 @@ function MyRecipesPage() {
     </div>
   );
 }
-
-
-
 
 const styles = {
   container: {
@@ -141,5 +171,6 @@ const styles = {
 };
 
 export default MyRecipesPage;
+
 
 
