@@ -91,8 +91,10 @@ function MyRecipesPage({ searchTerm }) {
         <div style={styles.grid}>
           {filteredMyRecipes.map((recipe) => (
             <div key={recipe.id} style={styles.card}>
-              <h3 style={styles.cardTitle}>{recipe.title}</h3>
-              <p style={styles.cardDesc}>{recipe.description}</p>
+              <div style={styles.cardContent}>
+                <h3 style={styles.cardTitle}>{recipe.title}</h3>
+                <p style={styles.cardDesc}>{recipe.description}</p>
+              </div>
               <div style={styles.buttonRow}>
                 <Link to={`/recipes/${recipe.id}`} className="recipe-btn view-btn">View</Link>
                 <Link to={`/recipes/${recipe.id}/edit`} className="recipe-btn edit-btn">Edit</Link>
@@ -135,14 +137,21 @@ const styles = {
   grid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-    gap: "2rem"
+    gap: "2rem",
+    alignItems: "stretch"
   },
   card: {
     backgroundColor: "#333",
     borderLeft: "4px solid #54cc86",
     borderRadius: "12px",
     padding: "1.5rem",
-    boxShadow: "0 4px 20px rgba(0,0,0,0.2)"
+    boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between"
+  },
+  cardContent: {
+    marginBottom: "1rem"
   },
   cardTitle: {
     margin: "0 0 0.5rem 0",
@@ -152,7 +161,12 @@ const styles = {
   cardDesc: {
     fontSize: "0.95rem",
     color: "#ccc",
-    marginBottom: "1rem"
+    marginBottom: "1rem",
+    display: "-webkit-box",
+    WebkitLineClamp: 3,          // Number of lines to show
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
+    textOverflow: "ellipsis"
   },
   buttonRow: {
     display: "flex",
