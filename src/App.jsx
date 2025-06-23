@@ -24,7 +24,7 @@ function App() {
         <Route path="/recipes" element={<RecipeListPage searchTerm={searchTerm} />} />
         <Route path="/add-recipe" element={<AddRecipePage />} />
         <Route path="/recipes/:id/edit" element={<EditRecipePage />} />
-        <Route path="/my-recipes" element={<MyRecipesPage />} />
+        <Route path="/my-recipes" element={<MyRecipesPage searchTerm={searchTerm} />} />
         <Route path="/recipes/:id" element={<RecipeDetailPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-function MyRecipesPage() {
+function MyRecipesPage({ searchTerm }) {
   const [myRecipes, setMyRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -70,6 +70,10 @@ function MyRecipesPage() {
     }
   };
 
+  const filteredMyRecipes = myRecipes.filter((recipe) =>
+    recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div style={styles.container}>
       <h1 style={styles.heading}>
@@ -77,21 +81,15 @@ function MyRecipesPage() {
       </h1>
       <p style={styles.subtext}>Here are the recipes you've added:</p>
 
-      <input
-        type="text"
-        placeholder="Search My Recipes..."
-        style={styles.searchBar}
-      />
-
       {error && <p style={{ color: "salmon" }}>{error}</p>}
 
       {loading ? (
         <p style={styles.noRecipes}>Loading...</p>
-      ) : myRecipes.length === 0 ? (
-        <p style={styles.noRecipes}>You haven't added any recipes yet.</p>
+      ) : filteredMyRecipes.length === 0 ? (
+        <p style={styles.noRecipes}>No recipes match your search.</p>
       ) : (
         <div style={styles.grid}>
-          {myRecipes.map((recipe) => (
+          {filteredMyRecipes.map((recipe) => (
             <div key={recipe.id} style={styles.card}>
               <h3 style={styles.cardTitle}>{recipe.title}</h3>
               <p style={styles.cardDesc}>{recipe.description}</p>
@@ -130,14 +128,6 @@ const styles = {
     fontSize: "1.1rem",
     color: "#ccc"
   },
-  searchBar: {
-    padding: "0.75rem",
-    width: "100%",
-    maxWidth: "400px",
-    borderRadius: "8px",
-    border: "1px solid #ccc",
-    marginBottom: "2rem"
-  },
   noRecipes: {
     fontStyle: "italic",
     color: "#888"
@@ -171,6 +161,3 @@ const styles = {
 };
 
 export default MyRecipesPage;
-
-
-

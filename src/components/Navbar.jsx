@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { AuthContext } from "../context/AuthContext";
 import "./NavbarResponsive.css";
@@ -7,6 +7,7 @@ import "./NavbarResponsive.css";
 function Navbar({ searchTerm, setSearchTerm }) {
   const { isAuthenticated, logout } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -22,6 +23,9 @@ function Navbar({ searchTerm, setSearchTerm }) {
     navigate("/");
   };
 
+  const placeholderText =
+    location.pathname === "/my-recipes" ? "Search my recipes..." : "Search recipes...";
+
   return (
     <nav style={navStyle}>
       <div className="navbar-container">
@@ -32,7 +36,7 @@ function Navbar({ searchTerm, setSearchTerm }) {
         <form onSubmit={handleSearchSubmit} className="search-form">
           <input
             type="text"
-            placeholder="Search recipes..."
+            placeholder={placeholderText}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="search-input"
