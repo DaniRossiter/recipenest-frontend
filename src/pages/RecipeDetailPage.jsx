@@ -39,6 +39,10 @@ function RecipeDetailPage() {
     <div style={styles.container}>
       <h1 style={styles.title}>{recipe.title}</h1>
 
+      {recipe.servings && (
+        <p style={styles.servings}>Serves: {recipe.servings}</p>
+      )}
+
       {recipe.image_url && (
         <img
           src={recipe.image_url}
@@ -97,9 +101,16 @@ const styles = {
   },
   title: {
     fontSize: "2.5rem",
-    marginBottom: "1rem",
+    marginBottom: "0.5rem",
     textAlign: "center",
     color: "#222"
+  },
+  servings: {
+    textAlign: "center",
+    fontSize: "1rem",
+    color: "#555",
+    marginBottom: "1rem",
+    fontStyle: "italic"
   },
   image: {
     width: "100%",

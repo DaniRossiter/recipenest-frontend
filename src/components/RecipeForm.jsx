@@ -7,6 +7,7 @@ function RecipeForm({ onSubmit, initialData = {}, buttonLabel }) {
   const [ingredients, setIngredients] = useState(initialData.ingredients?.join(", ") || "");
   const [instructions, setInstructions] = useState(initialData.instructions?.join("\n") || "");
   const [imageUrl, setImageUrl] = useState(initialData.imageUrl || "");
+  const [servings, setServings] = useState(initialData.servings || "");
   const [isHovered, setIsHovered] = useState(false);
 
   const handleSubmit = (e) => {
@@ -17,8 +18,9 @@ function RecipeForm({ onSubmit, initialData = {}, buttonLabel }) {
       ingredients: ingredients.split(",").map(item => item.trim()),
       instructions: instructions.split("\n").map(step => step.trim()),
       imageUrl,
+      servings,
     });
-    console.log("Form submitted in RecipeForm");
+    console.log("Form submitted in RecipeForm with servings:", servings);
   };
 
   return (
@@ -65,6 +67,19 @@ function RecipeForm({ onSubmit, initialData = {}, buttonLabel }) {
           placeholder={`e.g.\n1. Boil water\n2. Add pasta\n3. Cook for 10 mins`}
           style={styles.textarea}
           className="form-textarea"
+        />
+      </label>
+
+      <label style={styles.label}>
+        Servings
+        <input
+          type="number"
+          min="1"
+          value={servings}
+          onChange={(e) => setServings(e.target.value)}
+          placeholder="e.g. 4"
+          style={styles.input}
+          className="form-input"
         />
       </label>
 
@@ -149,7 +164,3 @@ const styles = {
 };
 
 export default RecipeForm;
-
-
-
-
