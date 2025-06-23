@@ -1,6 +1,7 @@
 import React from "react";
-import "../pages/RecipeListResponsive.css"; // Keep styles consistent
+import "../pages/RecipeListResponsive.css";
 import { Link } from "react-router-dom";
+import placeholderImage from "../assets/no-image-placeholder.png";
 
 function RecipeCard({ recipe, isHovered, onMouseEnter, onMouseLeave }) {
   const { title, image_url } = recipe;
@@ -19,9 +20,12 @@ function RecipeCard({ recipe, isHovered, onMouseEnter, onMouseLeave }) {
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      {image_url && (
-        <img src={image_url} alt={title} style={styles.image} />
-      )}
+      <img
+        src={image_url || placeholderImage}
+        alt={title}
+        style={styles.image}
+      />
+
       <h3 style={styles.title}>{title}</h3>
     </div>
   </Link>
