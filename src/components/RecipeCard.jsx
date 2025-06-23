@@ -66,7 +66,8 @@ const styles = {
     fontSize: "1.2rem",
     color: "#fff",
     margin: 0,
-  }
+  },
+  
 };
 
 export default RecipeCard;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./RecipeListResponsive.css";
 import RecipeCard from "../components/RecipeCard";
 
-function RecipeListPage() {
+function RecipeListPage({ searchTerm }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -33,6 +33,10 @@ function RecipeListPage() {
     fetchRecipes();
   }, []);
 
+  const filteredRecipes = recipes.filter((recipe) =>
+    recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   if (loading) {
     return <p style={{ textAlign: "center", color: "#ccc" }}>Loading recipes...</p>;
   }
@@ -47,7 +51,7 @@ function RecipeListPage() {
       <p style={styles.subtext}>Browse delicious creations shared by our community.</p>
 
       <div style={styles.grid} className="recipe-grid">
-        {recipes.map((recipe, index) => (
+        {filteredRecipes.map((recipe, index) => (
           <RecipeCard
             key={recipe.id || index}
             recipe={recipe}
@@ -88,6 +92,7 @@ const styles = {
 };
 
 export default RecipeListPage;
+
 
 
 

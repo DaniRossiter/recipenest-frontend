@@ -1,11 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { AuthContext } from "../context/AuthContext";
 import "./NavbarResponsive.css";
 
-function Navbar() {
-  const [searchTerm, setSearchTerm] = useState("");
+function Navbar({ searchTerm, setSearchTerm }) {
   const { isAuthenticated, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -73,4 +72,5 @@ const navStyle = {
 };
 
 export default Navbar;
+
 
