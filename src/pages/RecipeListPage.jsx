@@ -85,10 +85,11 @@ const styles = {
     textAlign: "center"
   },
   grid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-    gap: "2rem",
-  }
+  display: "flex",
+  flexWrap: "wrap",
+  justifyContent: "center",
+  gap: "2rem",
+}
 };
 
 export default RecipeListPage;
