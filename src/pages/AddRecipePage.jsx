@@ -27,7 +27,10 @@ function AddRecipePage() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(newRecipe),
+        body: JSON.stringify({
+          ...newRecipe,
+          image_url: newRecipe.imageUrl,
+        }),
       });
 
       if (response.ok) {
