@@ -29,7 +29,7 @@ function RecipeForm({ onSubmit, initialData = {}, buttonLabel }) {
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="Title"
+          placeholder="e.g. Spicy Peanut Noodles"
           style={styles.input}
           className="form-input"
         />
@@ -40,29 +40,29 @@ function RecipeForm({ onSubmit, initialData = {}, buttonLabel }) {
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Description"
+          placeholder="e.g. Creamy, spicy noodles with a peanut twist."
           style={styles.textarea}
           className="form-textarea"
         />
       </label>
 
       <label style={styles.label}>
-        Ingredients
+        Ingredients <span style={{ fontWeight: "normal" }}>(separate with commas)</span>
         <textarea
           value={ingredients}
           onChange={(e) => setIngredients(e.target.value)}
-          placeholder="Ingredients (comma-separated)"
+          placeholder="e.g. 1 cup rice, 2 eggs, 1 tbsp soy sauce"
           style={styles.textarea}
           className="form-textarea"
         />
       </label>
 
       <label style={styles.label}>
-        Instructions
+        Instructions <span style={{ fontWeight: "normal" }}>(each step on a new line)</span>
         <textarea
           value={instructions}
           onChange={(e) => setInstructions(e.target.value)}
-          placeholder="Instructions"
+          placeholder={`e.g.\n1. Boil water\n2. Add pasta\n3. Cook for 10 mins`}
           style={styles.textarea}
           className="form-textarea"
         />
@@ -74,7 +74,7 @@ function RecipeForm({ onSubmit, initialData = {}, buttonLabel }) {
           type="text"
           value={imageUrl}
           onChange={(e) => setImageUrl(e.target.value)}
-          placeholder="Image URL (optional)"
+          placeholder="Paste a direct image link (optional)"
           style={styles.input}
           className="form-input"
         />
