@@ -58,16 +58,16 @@ function RecipeDetailPage() {
         )}
       </ul>
 
-     <h3 style={styles.sectionTitle}>Instructions</h3>
-        <ol style={styles.list}>
-          {Array.isArray(recipe.instructions)
-            ? recipe.instructions.map((step, index) => (
-              <li key={index}>
-                {step.replace(/^\d+\.\s*/, "").trim()}
-              </li>
-              ))
-            : <li>No instructions available.</li>}
-        </ol>
+      <h3 style={styles.sectionTitle}>Instructions</h3>
+      <ol style={styles.list}>
+        {Array.isArray(recipe.instructions)
+          ? recipe.instructions.map((step, index) => (
+            <li key={index}>
+              {step.replace(/^\d+\.\s*/, "").trim()}
+            </li>
+          ))
+          : <li>No instructions available.</li>}
+      </ol>
 
       <div style={styles.buttonContainer}>
         <button className="outline-button" onClick={() => navigate("/recipes")}>Back</button>
@@ -100,13 +100,14 @@ const styles = {
     color: "#222"
   },
   image: {
-    maxWidth: "800px",
-    maxHeight: "300px",
+    width: "100%",
+    maxWidth: "500px",
+    height: "300px",
     objectFit: "cover",
-    borderRadius: "8px",
-    marginBottom: "1.5rem",
-    display: "block",
-    margin: "0 auto 1.5rem"
+    borderRadius: "12px",
+    boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
+    margin: "1rem auto",
+    display: "block"
   },
   description: {
     fontStyle: "italic",
@@ -131,5 +132,3 @@ const styles = {
 };
 
 export default RecipeDetailPage;
-
-
