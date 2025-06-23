@@ -9,12 +9,16 @@ function Navbar({ searchTerm, setSearchTerm }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    if (searchTerm.trim()) {
-      navigate(`/recipes?q=${encodeURIComponent(searchTerm.trim())}`);
-    } else {
-      navigate("/recipes");
+  const placeholderText =
+    location.pathname === "/my-recipes" ? "Search my recipes..." : "Search recipes...";
+
+  const handleSearchChange = (e) => {
+    const term = e.target.value;
+    setSearchTerm(term);
+
+    // Only navigate if not already on /my-recipes (which filters locally)
+    if (location.pathname !== "/my-recipes") {
+      navigate(`/recipes?q=${encodeURIComponent(term.trim())}`);
     }
   };
 
@@ -23,9 +27,6 @@ function Navbar({ searchTerm, setSearchTerm }) {
     navigate("/");
   };
 
-  const placeholderText =
-    location.pathname === "/my-recipes" ? "Search my recipes..." : "Search recipes...";
-
   return (
     <nav style={navStyle}>
       <div className="navbar-container">
@@ -33,12 +34,12 @@ function Navbar({ searchTerm, setSearchTerm }) {
           <img src={logo} alt="RecipeNest logo" className="logo-image" />
         </Link>
 
-        <form onSubmit={handleSearchSubmit} className="search-form">
+        <form onSubmit={(e) => e.preventDefault()} className="search-form">
           <input
             type="text"
             placeholder={placeholderText}
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={handleSearchChange}
             className="search-input"
           />
         </form>
@@ -62,9 +63,7 @@ function Navbar({ searchTerm, setSearchTerm }) {
               </span>
             </li>
           ) : (
-            <li>
-              <Link to="/login" className="nav-link">Login</Link>
-            </li>
+            <li><Link to="/login" className="nav-link">Login</Link></li>
           )}
         </ul>
       </div>
