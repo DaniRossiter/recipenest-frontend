@@ -11,15 +11,22 @@ function RecipeForm({ onSubmit, initialData = {}, buttonLabel }) {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit({
-      title,
-      description,
-      ingredients: ingredients.split(",").map(item => item.trim()),
-      instructions: instructions.split("\n").map(step => step.trim()),
-      imageUrl,
-      servings,
-    });
+  e.preventDefault();
+
+  const parsedServings = parseInt(servings, 10);
+  if (isNaN(parsedServings) || parsedServings < 1) {
+    alert("Please enter a valid number of servings (1 or more).");
+    return;
+  }
+
+  onSubmit({
+    title,
+    description,
+    ingredients: ingredients.split(",").map(item => item.trim()),
+    instructions: instructions.split("\n").map(step => step.trim()),
+    imageUrl,
+    servings: parsedServings,
+  });
     console.log("Form submitted in RecipeForm with servings:", servings);
   };
 
@@ -75,6 +82,7 @@ function RecipeForm({ onSubmit, initialData = {}, buttonLabel }) {
         <input
           type="number"
           min="1"
+          required
           value={servings}
           onChange={(e) => setServings(e.target.value)}
           placeholder="e.g. 4"
