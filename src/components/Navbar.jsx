@@ -11,6 +11,7 @@ function Navbar({ searchTerm, setSearchTerm }) {
   const location = useLocation();
 
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // NEW: Hamburger toggle state
 
   const placeholderText =
     location.pathname === "/my-recipes" ? "Search my recipes..." : "Search recipes...";
@@ -57,7 +58,16 @@ function Navbar({ searchTerm, setSearchTerm }) {
 
         <div className="spacer" />
 
-        <ul className="nav-links">
+        {/* NEW: Hamburger button */}
+        <button
+          className="hamburger-button"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          ☰
+        </button>
+
+        {/* UPDATED: Conditional class based on menu state */}
+        <ul className={`nav-links ${isMenuOpen ? "show" : "hide"}`}>
           <li>
             <NavLink
               to="/"
