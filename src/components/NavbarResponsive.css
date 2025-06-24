@@ -258,7 +258,7 @@
   }
 
   .nav-link {
-    display: block;
-    width: 100%;
+    display: inline-block;
+    width: auto;
   }
 }
