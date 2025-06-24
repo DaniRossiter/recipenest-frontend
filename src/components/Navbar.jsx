@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { AuthContext } from "../context/AuthContext";
 import ConfirmModal from "./ConfirmModal";
@@ -58,10 +58,39 @@ function Navbar({ searchTerm, setSearchTerm }) {
         <div className="spacer" />
 
         <ul className="nav-links">
-          <li><Link to="/" className="nav-link">Home</Link></li>
-          <li><Link to="/recipes" className="nav-link">Recipes</Link></li>
-          <li><Link to="/my-recipes" className="nav-link">My Recipes</Link></li>
-          <li><Link to="/add-recipe" className="nav-link">Add Recipe</Link></li>
+          <li>
+            <NavLink
+              to="/"
+              end
+              className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"}
+            >
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/recipes"
+              className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"}
+            >
+              Recipes
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/my-recipes"
+              className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"}
+            >
+              My Recipes
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/add-recipe"
+              className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"}
+            >
+              Add Recipe
+            </NavLink>
+          </li>
 
           {isAuthenticated ? (
             <li>
