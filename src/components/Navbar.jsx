@@ -1,13 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { AuthContext } from "../context/AuthContext";
+import ConfirmModal from "./ConfirmModal";
 import "./NavbarResponsive.css";
 
 function Navbar({ searchTerm, setSearchTerm }) {
   const { isAuthenticated, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const placeholderText =
     location.pathname === "/my-recipes" ? "Search my recipes..." : "Search recipes...";
@@ -16,15 +19,23 @@ function Navbar({ searchTerm, setSearchTerm }) {
     const term = e.target.value;
     setSearchTerm(term);
 
-    // Only navigate if not already on /my-recipes (which filters locally)
     if (location.pathname !== "/my-recipes") {
       navigate(`/recipes?q=${encodeURIComponent(term.trim())}`);
     }
   };
 
-  const handleLogout = () => {
+  const handleLogoutClick = () => {
+    setShowLogoutModal(true);
+  };
+
+  const confirmLogout = () => {
     logout();
     navigate("/");
+    setShowLogoutModal(false);
+  };
+
+  const cancelLogout = () => {
+    setShowLogoutModal(false);
   };
 
   return (
@@ -56,7 +67,7 @@ function Navbar({ searchTerm, setSearchTerm }) {
             <li>
               <span
                 className="nav-link"
-                onClick={handleLogout}
+                onClick={handleLogoutClick}
                 style={{ cursor: "pointer" }}
               >
                 Logout
@@ -67,6 +78,13 @@ function Navbar({ searchTerm, setSearchTerm }) {
           )}
         </ul>
       </div>
+
+      <ConfirmModal
+        isOpen={showLogoutModal}
+        message="Are you sure you want to log out?"
+        onConfirm={confirmLogout}
+        onCancel={cancelLogout}
+      />
     </nav>
   );
 }
@@ -79,5 +97,6 @@ const navStyle = {
 };
 
 export default Navbar;
+
 
 
