@@ -66,7 +66,6 @@ function Navbar({ searchTerm, setSearchTerm }) {
           ☰
         </button>
 
-
         <ul className={`nav-links ${isMenuOpen ? "show" : "hide"}`}>
           <li>
             <NavLink
