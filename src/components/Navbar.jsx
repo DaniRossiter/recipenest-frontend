@@ -58,7 +58,7 @@ function Navbar({ searchTerm, setSearchTerm }) {
 
         <div className="spacer" />
 
-        {/* NEW: Hamburger button */}
+       
         <button
           className="hamburger-button"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -66,56 +66,68 @@ function Navbar({ searchTerm, setSearchTerm }) {
           ☰
         </button>
 
-        {/* UPDATED: Conditional class based on menu state */}
+
         <ul className={`nav-links ${isMenuOpen ? "show" : "hide"}`}>
           <li>
             <NavLink
               to="/"
               end
+              onClick={() => setIsMenuOpen(false)}
               className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"}
-            >
-              Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/recipes"
-              className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"}
-            >
-              Recipes
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/my-recipes"
-              className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"}
-            >
-              My Recipes
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/add-recipe"
-              className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"}
-            >
-              Add Recipe
-            </NavLink>
-          </li>
+          >
+            Home
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/recipes"
+            onClick={() => setIsMenuOpen(false)}
+            className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"}
+          >
+            Recipes
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/my-recipes"
+            onClick={() => setIsMenuOpen(false)}
+            className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"}
+          >
+            My Recipes
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/add-recipe"
+            onClick={() => setIsMenuOpen(false)}
+            className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"}
+          >
+            Add Recipe
+          </NavLink>
+        </li>
 
-          {isAuthenticated ? (
-            <li>
-              <span
-                className="nav-link"
-                onClick={handleLogoutClick}
-                style={{ cursor: "pointer" }}
-              >
-                Logout
-              </span>
-            </li>
-          ) : (
-            <li><Link to="/login" className="nav-link">Login</Link></li>
-          )}
-        </ul>
+  {isAuthenticated ? (
+    <li>
+      <span
+        className="nav-link"
+        onClick={() => {
+          handleLogoutClick();
+          setIsMenuOpen(false);
+        }}
+        style={{ cursor: "pointer" }}
+      >
+        Logout
+      </span>
+    </li>
+  ) : (
+    <li>
+      <Link to="/login" className="nav-link" onClick={() => setIsMenuOpen(false)}>
+        Login
+      </Link>
+    </li>
+  )}
+</ul>
+
       </div>
 
       <ConfirmModal
