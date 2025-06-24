@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import ConfirmModal from "../components/ConfirmModal";
 
 function MyRecipesPage({ searchTerm }) {
   const [myRecipes, setMyRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [recipeToDelete, setRecipeToDelete] = useState(null);
   const username = localStorage.getItem("username");
   const navigate = useNavigate();
 
@@ -42,14 +45,16 @@ function MyRecipesPage({ searchTerm }) {
     fetchMyRecipes();
   }, [navigate]);
 
-  const handleDelete = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this recipe?");
-    if (!confirmDelete) return;
+  const handleDeleteClick = (id) => {
+    setRecipeToDelete(id);
+    setShowConfirmModal(true);
+  };
 
+  const confirmDelete = async () => {
     const token = localStorage.getItem("authToken");
 
     try {
-      const res = await fetch(`http://localhost:5000/api/recipes/${id}`, {
+      const res = await fetch(`http://localhost:5000/api/recipes/${recipeToDelete}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -63,11 +68,18 @@ function MyRecipesPage({ searchTerm }) {
         throw new Error(data.error || "Failed to delete recipe.");
       }
 
-      setMyRecipes((prev) => prev.filter((recipe) => recipe.id !== id));
+      setMyRecipes((prev) => prev.filter((recipe) => recipe.id !== recipeToDelete));
+      setRecipeToDelete(null);
+      setShowConfirmModal(false);
       alert("Recipe deleted successfully!");
     } catch (err) {
       alert(err.message);
     }
+  };
+
+  const cancelDelete = () => {
+    setShowConfirmModal(false);
+    setRecipeToDelete(null);
   };
 
   const filteredMyRecipes = myRecipes.filter((recipe) =>
@@ -100,7 +112,7 @@ function MyRecipesPage({ searchTerm }) {
                 <Link to={`/recipes/${recipe.id}/edit`} className="recipe-btn edit-btn">Edit</Link>
                 <button
                   className="recipe-btn delete-btn"
-                  onClick={() => handleDelete(recipe.id)}
+                  onClick={() => handleDeleteClick(recipe.id)}
                 >
                   Delete
                 </button>
@@ -109,6 +121,13 @@ function MyRecipesPage({ searchTerm }) {
           ))}
         </div>
       )}
+
+      <ConfirmModal
+        isOpen={showConfirmModal}
+        message="Are you sure you want to delete this recipe?"
+        onConfirm={confirmDelete}
+        onCancel={cancelDelete}
+      />
     </div>
   );
 }
@@ -163,7 +182,7 @@ const styles = {
     color: "#ccc",
     marginBottom: "1rem",
     display: "-webkit-box",
-    WebkitLineClamp: 3,          // Number of lines to show
+    WebkitLineClamp: 3,
     WebkitBoxOrient: "vertical",
     overflow: "hidden",
     textOverflow: "ellipsis"
