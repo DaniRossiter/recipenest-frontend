@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 function RegisterPage() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState(""); // Added username state
+  const { login } = useContext(AuthContext); // Use login function from context
+
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -13,7 +16,6 @@ function RegisterPage() {
     e.preventDefault();
     setError(null);
 
-    // Check all fields present
     if (!username || !email || !password) {
       return setError("All fields are required.");
     }
@@ -37,13 +39,14 @@ function RegisterPage() {
         throw new Error(data.error || "Failed to register.");
       }
 
-      localStorage.setItem("authToken", data.token); // This will work once backend returns token
+      // ✅ Use login from context to store token + username
+      login(data.token, data.user.username);
       navigate("/recipes");
     } catch (err) {
       setError(err.message);
     }
 
-    console.log("Sending:", { username, email, password }); // ✅ Keep your debug log
+    console.log("Sending:", { username, email, password });
   };
 
   return (
