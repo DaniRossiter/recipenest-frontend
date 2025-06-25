@@ -11,7 +11,7 @@ function Navbar({ searchTerm, setSearchTerm }) {
   const location = useLocation();
 
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // NEW: Hamburger toggle state
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // Hamburger toggle state
 
   const placeholderText =
     location.pathname === "/my-recipes" ? "Search my recipes..." : "Search recipes...";

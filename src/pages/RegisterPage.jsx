@@ -24,6 +24,12 @@ function RegisterPage() {
       return setError("Passwords do not match.");
     }
 
+    // Password strength check
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\[\]{};':"\\|,.<>/?]).{8,}$/;
+    if (!passwordRegex.test(password)) {
+      return setError("Password must be at least 8 characters long and include uppercase, lowercase, a number, and a special character.");
+    }
+
     try {
       const res = await fetch("http://localhost:5000/api/auth/register", {
         method: "POST",
@@ -39,8 +45,7 @@ function RegisterPage() {
         throw new Error(data.error || "Failed to register.");
       }
 
-      // ✅ Use login from context to store token + username
-      login(data.token, data.user.username);
+      login(data.token, data.user.username); 
       navigate("/recipes");
     } catch (err) {
       setError(err.message);

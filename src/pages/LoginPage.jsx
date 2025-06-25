@@ -32,7 +32,7 @@ function LoginPage() {
       // login() from context
       login(data.token, data.user.username);
 
-      navigate("/my-recipes"); // No need for timeout anymore
+      navigate("/my-recipes"); 
     } catch (err) {
       setError("Something went wrong. Please try again.");
     }

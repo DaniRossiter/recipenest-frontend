@@ -134,7 +134,7 @@
   text-decoration: underline;
 }
 
-/* Optional: improve spacing on mobile */
+/* Improve spacing on mobile */
 @media (max-width: 768px) {
   .user-section {
     flex-direction: column;
