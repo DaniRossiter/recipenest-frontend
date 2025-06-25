@@ -13,6 +13,11 @@ function RecipeForm({ onSubmit, initialData = {}, buttonLabel }) {
   const handleSubmit = (e) => {
   e.preventDefault();
 
+  if (!title.trim() || !description.trim() || !ingredients.trim() || !instructions.trim()) {
+    alert("Please fill in all required fields: title, description, ingredients, and instructions.");
+    return;
+  }
+
   const parsedServings = parseInt(servings, 10);
   if (isNaN(parsedServings) || parsedServings < 1) {
     alert("Please enter a valid number of servings (1 or more).");
@@ -27,8 +32,7 @@ function RecipeForm({ onSubmit, initialData = {}, buttonLabel }) {
     imageUrl,
     servings: parsedServings,
   });
-    console.log("Form submitted in RecipeForm with servings:", servings);
-  };
+};
 
   return (
     <form onSubmit={handleSubmit} style={styles.form} className="recipe-form">
@@ -41,6 +45,7 @@ function RecipeForm({ onSubmit, initialData = {}, buttonLabel }) {
           placeholder="e.g. Spicy Peanut Noodles"
           style={styles.input}
           className="form-input"
+          required
         />
       </label>
 
@@ -52,6 +57,7 @@ function RecipeForm({ onSubmit, initialData = {}, buttonLabel }) {
           placeholder="e.g. Creamy, spicy noodles with a peanut twist."
           style={styles.textarea}
           className="form-textarea"
+          required
         />
       </label>
 
@@ -63,6 +69,7 @@ function RecipeForm({ onSubmit, initialData = {}, buttonLabel }) {
           placeholder="e.g. 1 cup rice, 2 eggs, 1 tbsp soy sauce"
           style={styles.textarea}
           className="form-textarea"
+          required
         />
       </label>
 
@@ -74,6 +81,7 @@ function RecipeForm({ onSubmit, initialData = {}, buttonLabel }) {
           placeholder={`e.g.\nBoil water\nAdd pasta\nCook for 10 mins`}
           style={styles.textarea}
           className="form-textarea"
+          required
         />
       </label>
 
