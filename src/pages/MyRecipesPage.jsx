@@ -97,6 +97,8 @@ function MyRecipesPage({ searchTerm }) {
 
       {loading ? (
         <p style={styles.noRecipes}>Loading...</p>
+      ) : myRecipes.length === 0 ? (
+        <p style={styles.noRecipes}>You haven't added any recipes yet.</p>
       ) : filteredMyRecipes.length === 0 ? (
         <p style={styles.noRecipes}>No recipes match your search.</p>
       ) : (
