@@ -71,7 +71,7 @@ function RecipeForm({ onSubmit, initialData = {}, buttonLabel }) {
         <textarea
           value={instructions}
           onChange={(e) => setInstructions(e.target.value)}
-          placeholder={`e.g.\n1. Boil water\n2. Add pasta\n3. Cook for 10 mins`}
+          placeholder={`e.g.\nBoil water\nAdd pasta\nCook for 10 mins`}
           style={styles.textarea}
           className="form-textarea"
         />
