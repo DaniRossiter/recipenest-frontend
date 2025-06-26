@@ -12,7 +12,7 @@ function EditRecipePage() {
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/recipes/${id}`);
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/recipes/${id}`);
         if (!response.ok) throw new Error("Failed to fetch recipe");
 
         const data = await response.json();
@@ -35,7 +35,7 @@ function EditRecipePage() {
 
   const handleUpdate = async (updatedRecipe) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/recipes/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/recipes/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

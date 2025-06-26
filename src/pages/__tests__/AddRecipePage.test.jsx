@@ -52,7 +52,7 @@ test("renders AddRecipe form and submits new recipe", async () => {
   await waitFor(() => {
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith(
-      expect.stringContaining("/api/recipes"),
+      expect.stringContaining("/recipes"),
       expect.objectContaining({
         method: "POST",
         headers: expect.any(Object),

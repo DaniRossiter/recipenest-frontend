@@ -13,7 +13,7 @@ function RecipeDetailPage() {
     const fetchRecipe = async () => {
       try {
         const API_BASE = import.meta.env.VITE_API_BASE_URL;
-        const res = await fetch(`${API_BASE}/api/recipes/${id}`);
+        const res = await fetch(`${API_BASE}/recipes/${id}`);
         const data = await res.json();
 
         if (!res.ok) {
