@@ -15,7 +15,6 @@ function AddRecipePage() {
   }, [isAuthenticated, navigate]);
 
   const handleAdd = async (newRecipe) => {
-    console.log("handleAdd called with:", newRecipe);
     try {
       const token = localStorage.getItem("authToken");
 

@@ -50,7 +50,6 @@ function EditRecipePage() {
       }
 
       const data = await response.json();
-      console.log("Recipe updated:", data);
       navigate(`/recipes/${id}`);
     } catch (err) {
       console.error("Error updating recipe:", err);

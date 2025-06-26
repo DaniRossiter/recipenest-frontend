@@ -3,15 +3,6 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import EditRecipePage from "../EditRecipePage";
 import { MemoryRouter } from "react-router-dom";
 
-// Spy on console.log
-beforeEach(() => {
-  jest.spyOn(console, "log").mockImplementation(() => {});
-});
-
-afterEach(() => {
-  jest.restoreAllMocks();
-});
-
 test("renders EditRecipePage with mock data and logs updated recipe", () => {
   render(
     <MemoryRouter>

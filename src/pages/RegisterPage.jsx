@@ -50,8 +50,6 @@ function RegisterPage() {
     } catch (err) {
       setError(err.message);
     }
-
-    console.log("Sending:", { username, email, password });
   };
 
   return (

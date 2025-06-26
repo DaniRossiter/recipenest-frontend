@@ -19,7 +19,6 @@ function RecipeDetailPage() {
           throw new Error(data.error || "Failed to fetch recipe");
         }
 
-        console.log("Fetched recipe:", data);
         setRecipe(data);
       } catch (err) {
         setError(err.message);
