@@ -22,7 +22,7 @@ function MyRecipesPage({ searchTerm }) {
 
       try {
         const API_BASE = import.meta.env.VITE_API_BASE_URL;
-        const res = await fetch(`${API_BASE}/api/recipes/mine`, {
+        const res = await fetch(`${API_BASE}/recipes/mine`, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -56,7 +56,7 @@ function MyRecipesPage({ searchTerm }) {
 
     try {
       const API_BASE = import.meta.env.VITE_API_BASE_URL;
-      const res = await fetch(`${API_BASE}/api/recipes/${recipeToDelete}`, {
+      const res = await fetch(`${API_BASE}/recipes/${recipeToDelete}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
