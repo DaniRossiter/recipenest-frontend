@@ -19,7 +19,7 @@ function RecipeListPage() {
       setError(null);
 
       try {
-        const res = await fetch("http://localhost:5000/api/recipes");
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/recipes`);
 
         if (!res.ok) {
           throw new Error("Failed to fetch recipes");

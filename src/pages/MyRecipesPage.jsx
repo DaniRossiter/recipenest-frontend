@@ -21,7 +21,8 @@ function MyRecipesPage({ searchTerm }) {
       }
 
       try {
-        const res = await fetch("http://localhost:5000/api/recipes/mine", {
+        const API_BASE = import.meta.env.VITE_API_BASE_URL;
+        const res = await fetch(`${API_BASE}/api/recipes/mine`, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -54,7 +55,8 @@ function MyRecipesPage({ searchTerm }) {
     const token = localStorage.getItem("authToken");
 
     try {
-      const res = await fetch(`http://localhost:5000/api/recipes/${recipeToDelete}`, {
+      const API_BASE = import.meta.env.VITE_API_BASE_URL;
+      const res = await fetch(`${API_BASE}/api/recipes/${recipeToDelete}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
