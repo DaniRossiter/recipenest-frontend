@@ -226,7 +226,7 @@
   }
 
   .logo-image {
-    height: 110px;
+    height: 60px;
     width: auto;
     margin: 0 auto;
     display: block;
@@ -245,8 +245,7 @@
   }
 }
 
-/* medium screen size */
-
+/* Medium screen size */
 @media (max-width: 1024px) and (min-width: 769px) {
   .nav-links {
     gap: 1rem;
